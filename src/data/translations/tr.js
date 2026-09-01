@@ -2,11 +2,11 @@ const translations = {
   welcome: {
     badge: "ISOC Araştırma Anketi · 2026",
 
-    titleLine1: "Deneyiminizi",
-    titleHighlight: "paylaşın.",
+    titleLine1: "Deneyimini",
+    titleHighlight: "paylaş.",
 
     description:
-      "İzmir, Türkiye'de yaşayan yabancı uyruklu kişilerin deneyimlerini, karşılaştıkları zorlukları ve fırsatlarını daha iyi anlamamıza yardımcı olun.",
+      "İzmir, Türkiye'de yaşayan yabancı uyrukluların deneyimlerini, karşılaştıkları zorlukları ve fırsatları daha iyi anlamamıza yardımcı olun.",
 
     startButton: "Başlayalım",
 
@@ -20,16 +20,16 @@ const translations = {
     titleHighlight: "önemli.",
 
     paragraph1:
-      "Bu anket, İzmir, Türkiye'de yaşayan yabancı uyruklu kişilerin deneyimleri, eğitim geçmişleri, istihdam durumları ve yaşam kalitesi hakkında bilgi toplamak amacıyla International Student Orientation Camp (ISOC) Organizasyon Ekibi tarafından yürütülmektedir.",
+      "Bu anket, İzmir, Türkiye'de yaşayan yabancı uyrukluların deneyimleri, eğitim geçmişleri, istihdam durumları ve yaşam kaliteleri hakkında bilgi toplamak amacıyla International Student Orientation Camp (ISOC) Organizatörleri tarafından yürütülmektedir.",
 
     paragraph2:
-      "Toplanan bilgiler, İzmir'de yaşayan yabancıların demografik özelliklerini, karşılaştıkları zorlukları, fırsatları ve genel deneyimlerini daha iyi anlamak amacıyla kullanılacaktır. Elde edilen bulgular, uluslararası toplumun refahını, topluma uyumunu ve mevcut destek hizmetlerini geliştirmeye yönelik kanıta dayalı girişimleri, programları ve gelecekteki araştırmaları destekleyecektir.",
+      "Toplanan bilgiler, İzmir'de yaşayan yabancıların demografik özelliklerini, karşılaştıkları zorlukları, fırsatları ve genel deneyimlerini daha iyi anlamak için kullanılacaktır. Elde edilen bulgular, uluslararası toplumun refahını, topluma uyumunu ve destek hizmetlerini geliştirmeye yönelik kanıta dayalı girişimleri, programları ve gelecekteki araştırmaları destekleyecektir.",
 
     paragraph3:
-      "Katılımınız gönüllülük esasına dayanmaktadır ve tüm yanıtlarınız anonim ve gizli tutulacaktır. Kişisel olarak tanımlanmanızı sağlayacak herhangi bir bilgi toplanmayacak ve veriler yalnızca araştırma, planlama ve istatistiksel amaçlarla kullanılacaktır.",
+      "Katılımınız gönüllülük esasına dayanmaktadır ve tüm yanıtlarınız anonim ve gizli tutulacaktır. Kişisel olarak tanımlanmanızı sağlayacak herhangi bir bilgi toplanmayacaktır. Veriler yalnızca araştırma, planlama ve istatistiksel amaçlarla kullanılacaktır.",
 
     paragraph4:
-      "Anketin tamamlanması yaklaşık 2–3 dakika sürmektedir. Her soruyu kişisel deneyimlerinize dayanarak dürüstçe yanıtlamanızı rica ederiz.",
+      "Anketin tamamlanması yaklaşık 2–3 dakika sürmektedir. Her soruyu kişisel deneyimlerinizi göz önünde bulundurarak dürüstçe yanıtlamanızı rica ederiz.",
 
     thankYou:
       "Değerli zamanınız ve katkınız için teşekkür ederiz.",
@@ -46,11 +46,11 @@ const translations = {
 
     required: "Bu soru zorunludur.",
 
-    selectAnswer: "Bir cevap seçin",
-    selectAll: "Uygun olan tüm seçenekleri işaretleyin.",
+    selectAnswer: "Bir yanıt seçin",
+    selectAll: "Uygun olanların tümünü seçin.",
 
     shortAnswerPlaceholder:
-      "Cevabınızı yazın...",
+      "Yanıtınızı yazın...",
 
     longAnswerPlaceholder:
       "Düşüncelerinizi paylaşın...",
@@ -62,8 +62,28 @@ const translations = {
       "1 ile 10 arasında bir sayı seçin.",
 
     gridInstruction:
-      "Lütfen her satır için bir seçenek belirleyin.",
+      "Her satır için bir seçenek belirleyin.",
   },
+
+  submitting: {
+    errorLabel: "Gönderim sorunu",
+
+    errorTitleLine1: "Yanıtlarınızı",
+    errorTitleHighlight: "henüz kaydedemedik.",
+
+    errorDescription:
+        "Yanıtlarınız bu oturumda güvenli bir şekilde saklanmaya devam ediyor. Lütfen tekrar göndermeyi deneyin.",
+
+    retryButton: "Tekrar dene",
+
+    loadingLabel: "Katkınız kaydediliyor",
+
+    loadingTitleLine1: "Yanıtlarınız",
+    loadingTitleHighlight: "kaydediliyor.",
+
+    loadingDescription:
+        "Anket yanıtlarınızı güvenli bir şekilde kaydetmemiz için lütfen bir süre bekleyin.",
+    },
 
   completion: {
     label: "Yolculuk tamamlandı",
@@ -72,9 +92,9 @@ const translations = {
     titleHighlight: "hikâyenizi paylaştığınız için.",
 
     description:
-      "Yanıtlarınız kaydedildi. Her yanıt, İzmir'de yaşayan yabancı uyruklu kişilerin deneyimlerini daha iyi anlamamıza yardımcı oluyor.",
+      "Yanıtlarınız kaydedildi. Verdiğiniz her yanıt, İzmir'de yaşayan yabancı uyrukluların deneyimlerini daha iyi anlamamıza yardımcı oluyor.",
 
-    restart: "Yeniden başla",
+    restart: "Tekrar başla",
   },
 
   language: {

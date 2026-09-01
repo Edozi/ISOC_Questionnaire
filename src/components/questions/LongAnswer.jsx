@@ -1,6 +1,7 @@
 function LongAnswer({
   value = "",
   onChange,
+  placeholder,
 }) {
   return (
     <textarea
@@ -9,7 +10,7 @@ function LongAnswer({
       onChange={(event) =>
         onChange(event.target.value)
       }
-      placeholder="Share your thoughts here..."
+      placeholder={placeholder}
       rows="6"
     />
   );

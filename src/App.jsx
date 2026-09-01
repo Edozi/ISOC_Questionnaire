@@ -137,6 +137,7 @@ return ( <Introduction
 if (screen === "submitting") {
   return (
     <Submitting
+      content={t.submitting}
       error={submissionError}
       onRetry={handleRetrySubmission}
     />

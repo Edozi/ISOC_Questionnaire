@@ -36,6 +36,7 @@ function QuestionCard({
           <ShortAnswer
             value={value}
             onChange={onChange}
+            placeholder={content.shortAnswerPlaceholder}
           />
         );
 
@@ -44,6 +45,7 @@ function QuestionCard({
           <LongAnswer
             value={value}
             onChange={onChange}
+            placeholder={content.longAnswerPlaceholder}
           />
         );
 

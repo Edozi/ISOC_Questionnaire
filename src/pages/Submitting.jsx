@@ -1,73 +1,50 @@
 import Button from "../components/Button";
 
-function Submitting({
-  error,
-  onRetry,
-}) {
+function Submitting({ content, error, onRetry }) {
   if (error) {
     return (
       <main className="completion-page">
         <div className="completion-card">
+          <div className="completion-icon">!</div>
 
-          <div className="completion-icon">
-            !
-          </div>
-
-          <span className="completion-label">
-            Submission issue
-          </span>
+          <span className="completion-label">{content.errorLabel}</span>
 
           <h1>
-            We couldn't save
+            {content.errorTitleLine1}
             <br />
-            <span>your responses yet.</span>
+            <span>{content.errorTitleHighlight}</span>
           </h1>
 
-          <p>
-            <p>
-                Your answers are still safely stored in this
-                session. Please try submitting again.
-            </p>
-          </p>
+          <p>{content.errorDescription}</p>
 
           <Button onClick={onRetry}>
-            Try again
+            {content.retryButton}
             <span> →</span>
           </Button>
-
         </div>
       </main>
     );
   }
 
-
   return (
     <main className="completion-page">
       <div className="completion-card">
-
         <div className="completion-icon loading-icon">
           <span />
         </div>
 
-        <span className="completion-label">
-          Saving your contribution
-        </span>
+        <span className="completion-label">{content.loadingLabel}</span>
 
         <h1>
-          Recording
+          {content.loadingTitleLine1}
           <br />
-          <span>your responses.</span>
+          <span>{content.loadingTitleHighlight}</span>
         </h1>
 
-        <p>
-          Please wait a moment while we securely
-          save your survey responses.
-        </p>
-
+        <p>{content.loadingDescription}</p>
       </div>
     </main>
   );
 }
-
 
 export default Submitting;

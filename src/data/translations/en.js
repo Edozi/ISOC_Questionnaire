@@ -65,6 +65,26 @@ const translations = {
       "Please select one option for each row.",
   },
 
+  submitting: {
+    errorLabel: "Submission issue",
+
+    errorTitleLine1: "We couldn't save",
+    errorTitleHighlight: "your responses yet.",
+
+    errorDescription:
+        "Your answers are still safely stored in this session. Please try submitting again.",
+
+    retryButton: "Try again",
+
+    loadingLabel: "Saving your contribution",
+
+    loadingTitleLine1: "Recording",
+    loadingTitleHighlight: "your responses.",
+
+    loadingDescription:
+        "Please wait a moment while we securely save your survey responses.",
+    },
+
   completion: {
     label: "Journey complete",
 
