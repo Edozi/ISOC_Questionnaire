@@ -1,32 +1,34 @@
 import Button from "../components/Button";
 
-function Completion({ onRestart }) {
+function Completion({ content, onRestart }) {
+  const completion = content;
+
   return (
     <main className="completion-page">
       <div className="completion-card">
+
         <div className="completion-icon">
           ✓
         </div>
 
         <span className="completion-label">
-          Journey complete
+          {completion.label}
         </span>
 
         <h1>
-          Thank you for
+          {completion.titleLine1}
           <br />
-          sharing <span>your story.</span>
+          <span>{completion.titleHighlight}</span>
         </h1>
 
         <p>
-          Your responses have been recorded. Every answer
-          helps us better understand young people's
-          perspectives, goals and aspirations.
+          {completion.description}
         </p>
 
-        {/* <Button onClick={onRestart}>
-          Start again
-        </Button> */}
+        <Button onClick={onRestart}>
+          {completion.restart}
+        </Button>
+
       </div>
     </main>
   );

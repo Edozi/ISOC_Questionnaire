@@ -4,56 +4,62 @@ function MultipleChoiceGrid({
   value = {},
   onChange,
 }) {
-  const handleSelect = (row, column) => {
+  const handleSelect = (rowValue, columnValue) => {
     onChange({
       ...value,
-      [row]: column,
+      [rowValue]: columnValue,
     });
   };
 
   return (
     <div className="grid-question">
       <div className="grid-table">
+
         <div className="grid-header grid-row">
           <div className="grid-row-label" />
 
           {columns.map((column) => (
             <div
-              key={column}
+              key={column.value}
               className="grid-column-label"
             >
-              {column}
+              {column.label}
             </div>
           ))}
         </div>
 
         {rows.map((row) => (
           <div
-            key={row}
+            key={row.value}
             className="grid-row"
           >
             <div className="grid-row-label">
-              {row}
+              {row.label}
             </div>
 
             {columns.map((column) => (
               <div
-                key={column}
+                key={`${row.value}-${column.value}`}
                 className="grid-cell"
               >
                 <button
                   type="button"
                   className={`grid-radio ${
-                    value[row] === column
+                    value[row.value] ===
+                    column.value
                       ? "selected"
                       : ""
                   }`}
                   onClick={() =>
-                    handleSelect(row, column)
+                    handleSelect(
+                      row.value,
+                      column.value
+                    )
                   }
-                  aria-label={`${row}: ${column}`}
+                  aria-label={`${row.label}: ${column.label}`}
                 >
-                  {value[row] === column && (
+                  {value[row.value] ===
+                    column.value && (
                     <span />
                   )}
                 </button>
@@ -61,6 +67,7 @@ function MultipleChoiceGrid({
             ))}
           </div>
         ))}
+
       </div>
     </div>
   );

@@ -1,22 +1,41 @@
 import QuestionOption from "../QuestionOption";
 
-function SingleChoice({
+function MultipleChoice({
   options,
-  value,
+  value = [],
   onChange,
 }) {
+  const handleToggle = (optionValue) => {
+    if (value.includes(optionValue)) {
+      onChange(
+        value.filter(
+          (item) => item !== optionValue
+        )
+      );
+    } else {
+      onChange([
+        ...value,
+        optionValue,
+      ]);
+    }
+  };
+
   return (
     <div className="options">
       {options.map((option) => (
         <QuestionOption
-          key={option}
+          key={option.value}
           option={option}
-          selected={value === option}
-          onClick={() => onChange(option)}
+          selected={value.includes(
+            option.value
+          )}
+          onClick={() =>
+            handleToggle(option.value)
+          }
         />
       ))}
     </div>
   );
 }
 
-export default SingleChoice;
+export default MultipleChoice;

@@ -1,7 +1,23 @@
 import Button from "../components/Button";
+import LanguageSelector from "../components/LanguageSelector";
 
-function Welcome({ questionnaire, onStart }) {
-return ( <main className="welcome-page"> <div className="welcome-background-shape shape-one" /> <div className="welcome-background-shape shape-two" />
+function Welcome({
+content,
+language,
+onLanguageChange,
+onStart,
+}) {
+return (
+<main className="welcome-page">
+<div className="welcome-background-shape shape-one" />
+<div className="welcome-background-shape shape-two" />
+
+  <div className="welcome-language">
+    <LanguageSelector
+      language={language}
+      onLanguageChange={onLanguageChange}
+    />
+  </div>
 
   <div className="welcome-content">
     <div className="brand-mark">
@@ -9,30 +25,28 @@ return ( <main className="welcome-page"> <div className="welcome-background-shap
     </div>
 
     <div className="welcome-badge">
-      ISOC Research Survey · 2026
+      {content.badge}
     </div>
 
     <h1>
-      Share
+      {content.titleLine1}
       <br />
-      <span>your experience.</span>
+      <span>{content.titleHighlight}</span>
     </h1>
 
     <p>
-      Help us better understand the experiences, challenges, and
-      opportunities of foreign nationals living in İzmir, Türkiye.
+      {content.description}
     </p>
 
     <Button onClick={onStart}>
-      Let's begin <span>→</span>
+      {content.startButton} <span>→</span>
     </Button>
 
     <div className="welcome-note">
-      Takes approximately 5–7 minutes
+      {content.duration}
     </div>
   </div>
 </main>
-
 
 );
 }

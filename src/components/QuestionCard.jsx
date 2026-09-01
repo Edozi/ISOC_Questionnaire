@@ -9,6 +9,7 @@ function QuestionCard({
   question,
   value,
   onChange,
+  content,
 }) {
   const renderQuestionInput = () => {
     switch (question.type) {
@@ -76,7 +77,7 @@ function QuestionCard({
   return (
     <div className="question-card">
       <div className="question-number">
-        Question
+        {content.question}
       </div>
 
       <h1>{question.question}</h1>

@@ -1,65 +1,43 @@
 import Button from "../components/Button";
 
-function Introduction({ onStart }) {
-return ( <main className="introduction-page"> <div className="introduction-card">
+function Introduction({ content, onContinue }) {
+  const introduction = content;
 
-    <span className="introduction-label">
-      Before we begin
-    </span>
+  return (
+    <main className="introduction-page">
 
-    <h1>
-      Your experience
-      <br />
-      <span>matters.</span>
-    </h1>
+      <div className="introduction-card">
+        <span className="introduction-label">
+          {introduction.label}
+        </span>
 
-    <div className="introduction-content">
-      <p>
-        This survey is being conducted by the International Student
-        Orientation Camp (ISOC) Organizers to collect information about
-        the experiences, educational backgrounds, employment status, and
-        quality of life of foreign nationals residing in İzmir, Türkiye.
-      </p>
+        <h1>
+          {introduction.titleLine1}
+          <br />
+          <span>{introduction.titleHighlight}</span>
+        </h1>
 
-      <p>
-        The information gathered will help us better understand the
-        demographics, challenges, opportunities, and overall experiences
-        of foreigners living in İzmir. The findings will support
-        evidence-based initiatives, programs, and future research aimed at
-        improving the well-being, integration, and support services
-        available to the international community.
-      </p>
+        <div className="introduction-content">
+          <p>{introduction.paragraph1}</p>
 
-      <p>
-        Your participation is voluntary, and all responses will remain
-        anonymous and confidential. No personally identifiable information
-        will be collected, and the data will be used strictly for research,
-        planning, and statistical purposes.
-      </p>
+          <p>{introduction.paragraph2}</p>
 
-      <p>
-        The survey takes approximately <strong>5–7 minutes</strong> to
-        complete. We kindly ask that you answer each question honestly
-        based on your personal experiences.
-      </p>
-    </div>
+          <p>{introduction.paragraph3}</p>
 
-    <div className="introduction-info">
-      <span>✦</span>
-      <p>
-        Thank you for your valuable time and contribution.
-      </p>
-    </div>
+          <p>{introduction.paragraph4}</p>
 
-    <Button onClick={onStart}>
-      Begin survey →
-    </Button>
+          <p className="introduction-info">
+            {introduction.thankYou}
+          </p>
+        </div>
 
-  </div>
-</main>
-
-
-);
+        <Button onClick={onContinue}>
+          {introduction.beginButton}
+          <span> →</span>
+        </Button>
+      </div>
+    </main>
+  );
 }
 
 export default Introduction;

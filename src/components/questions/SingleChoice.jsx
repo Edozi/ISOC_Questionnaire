@@ -9,10 +9,12 @@ function SingleChoice({
     <div className="options">
       {options.map((option) => (
         <QuestionOption
-          key={option}
+          key={option.value}
           option={option}
-          selected={value === option}
-          onClick={() => onChange(option)}
+          selected={value === option.value}
+          onClick={() =>
+            onChange(option.value)
+          }
         />
       ))}
     </div>

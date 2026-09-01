@@ -15,7 +15,7 @@ function QuestionOption({
       </span>
 
       <span className="option-text">
-        {option}
+        {option.label}
       </span>
 
       {selected && (
