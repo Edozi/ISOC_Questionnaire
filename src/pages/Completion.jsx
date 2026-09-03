@@ -1,7 +1,11 @@
 import Button from "../components/Button";
 
-function Completion({ content, onRestart }) {
+function Completion({ content, redirectUrl }) {
   const completion = content;
+
+  const handleRedirect = () => {
+    window.location.href = redirectUrl;
+  };
 
   return (
     <main className="completion-page">
@@ -25,7 +29,7 @@ function Completion({ content, onRestart }) {
           {completion.description}
         </p>
 
-        <Button onClick={onRestart}>
+        <Button onClick={handleRedirect}>
           {completion.restart}
         </Button>
 

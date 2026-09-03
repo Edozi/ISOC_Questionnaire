@@ -228,6 +228,17 @@ required: true,
       question:
         "Are you currently working in your field of study?",
       required: true,
+
+      condition: {
+        questionId: "q9",
+        includes: [
+          "employed_full_time",
+          "employed_part_time",
+          "self_employed",
+          "intern",
+        ],
+      },
+
       options: [
         {
           value: "yes",
@@ -236,10 +247,6 @@ required: true,
         {
           value: "no",
           label: "No",
-        },
-        {
-          value: "not_applicable",
-          label: "Not applicable",
         },
       ],
     },
@@ -252,6 +259,7 @@ required: true,
       description:
         "Please briefly describe your current work.",
       required: false,
+
       condition: {
         questionId: "q10",
         equals: "no",
@@ -264,6 +272,17 @@ required: true,
       question:
         "How did you obtain your current job?",
       required: true,
+
+      condition: {
+        questionId: "q9",
+        includes: [
+          "employed_full_time",
+          "employed_part_time",
+          "self_employed",
+          "intern",
+        ],
+      },
+
       options: [
         {
           value: "university_career_center",
@@ -428,7 +447,7 @@ required: true,
       id: "q16",
       type: "single-choice",
       question:
-        "Do you intend to remain in Türkiye after completing your studies?",
+        "Do you intend to remain in Türkiye in the future?",
       required: true,
       options: [
         {
@@ -581,11 +600,65 @@ required: true,
 },
 
 {
+  id: "isoc-program",
+  title: "ISOC Program",
+  questions: [
+    {
+      id: "q20",
+      type: "single-choice",
+      question:
+        "Have you previously attended the ISOC program?",
+      required: true,
+      options: [
+        {
+          value: "yes",
+          label: "Yes",
+        },
+        {
+          value: "no",
+          label: "No",
+        },
+      ],
+    },
+
+    {
+      id: "q21",
+      type: "long-answer",
+      question:
+        "How would you describe your experience with the ISOC program?",
+      description:
+        "Please share what you found valuable and any areas you believe could be improved.",
+      required: true,
+
+      condition: {
+        questionId: "q20",
+        equals: "yes",
+      },
+    },
+
+    {
+      id: "q22",
+      type: "long-answer",
+      question:
+        "What suggestions do you have for the upcoming version of the ISOC program?",
+      description:
+        "Please share any ideas or recommendations that could improve the next version of the program.",
+      required: true,
+
+      condition: {
+        questionId: "q20",
+        equals: "yes",
+      },
+    },
+  ],
+},
+
+{
   id: "final-comments",
   title: "Final Comments",
   questions: [
     {
-      id: "q20",
+      id: "q23",
       type: "long-answer",
       question:
         "What recommendations would you make to improve the experience of students and residents living in İzmir, Türkiye?",

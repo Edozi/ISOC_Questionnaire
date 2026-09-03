@@ -40,9 +40,20 @@ function Questionnaire({
       const {
         questionId,
         equals,
+        includes,
       } = question.condition;
 
-      return answers[questionId] === equals;
+      const answer = answers[questionId];
+
+      if (equals !== undefined) {
+        return answer === equals;
+      }
+
+      if (includes) {
+        return includes.includes(answer);
+      }
+
+      return true;
     });
   }, [allQuestions, answers]);
 

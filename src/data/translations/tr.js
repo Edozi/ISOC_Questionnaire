@@ -94,7 +94,7 @@ const translations = {
     description:
       "Yanıtlarınız kaydedildi. Verdiğiniz her yanıt, İzmir'de yaşayan yabancı uyrukluların deneyimlerini daha iyi anlamamıza yardımcı oluyor.",
 
-    restart: "Tekrar başla",
+    restart: "Daha fazlasını keşfedin",
   },
 
   language: {

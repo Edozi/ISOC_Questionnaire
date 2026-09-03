@@ -94,7 +94,7 @@ const translations = {
     description:
       "Vos réponses ont été enregistrées. Chaque réponse nous aide à mieux comprendre les expériences des ressortissants étrangers vivant à İzmir.",
 
-    restart: "Recommencer",
+    restart: "En savoir plus",
   },
 
   language: {
