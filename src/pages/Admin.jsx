@@ -1,25 +1,15 @@
 import { useEffect, useMemo, useState } from "react";
 import "../styles/admin.css";
 
+import { useNavigate } from "react-router-dom";
+import { adminFetch } from "../lib/api";
+
 import {
   Users,
   MapPin,
   Star,
   Compass,
-  Languages,
 } from "lucide-react";
-
-import {
-  BarChart,
-  Bar,
-  PieChart,
-  Pie,
-  Cell,
-  XAxis,
-  YAxis,
-  Tooltip,
-  ResponsiveContainer,
-} from "recharts";
 
 import AdminSidebar from "../components/admin/AdminSidebar";
 import AdminHeader from "../components/admin/AdminHeader";
@@ -39,25 +29,31 @@ import {
 } from "../utils/analytics";
 
 import questionMetadata from "../utils/questionMetadata";
+import { exportResponsesToCSV } from "../utils/exportCSV";
 
 
 function Admin() {
+  /*
+   * =========================================================
+   * STATE
+   * =========================================================
+   */
+
   const [activeSection, setActiveSection] =
     useState("overview");
 
   const [responses, setResponses] = useState([]);
 
-  const [loading, setLoading] =
-    useState(true);
+  const [loading, setLoading] = useState(true);
 
-  const [error, setError] =
-    useState(null);
+  const [error, setError] = useState(null);
 
+  const navigate = useNavigate();
 
   /*
-   * =====================================================
-   * LOAD RESPONSES FROM FASTAPI
-   * =====================================================
+   * =========================================================
+   * LOAD RESPONSES
+   * =========================================================
    */
 
   useEffect(() => {
@@ -66,8 +62,7 @@ function Admin() {
         setLoading(true);
         setError(null);
 
-        const apiUrl =
-          import.meta.env.VITE_API_URL;
+        const apiUrl = import.meta.env.VITE_API_URL;
 
         if (!apiUrl) {
           throw new Error(
@@ -75,8 +70,8 @@ function Admin() {
           );
         }
 
-        const response = await fetch(
-          `${apiUrl}/api/admin/responses`
+        const response = await adminFetch(
+          "/api/admin/responses"
         );
 
         if (!response.ok) {
@@ -85,13 +80,13 @@ function Admin() {
           );
         }
 
-        const data =
-          await response.json();
+        const data = await response.json();
 
         setResponses(
-          data.responses || []
+          Array.isArray(data.responses)
+            ? data.responses
+            : []
         );
-
       } catch (error) {
         console.error(
           "Failed to load admin responses:",
@@ -102,7 +97,6 @@ function Admin() {
           error.message ||
             "Failed to load survey responses."
         );
-
       } finally {
         setLoading(false);
       }
@@ -113,484 +107,403 @@ function Admin() {
 
 
   /*
-   * =====================================================
+   * =========================================================
    * BASIC STATISTICS
-   * =====================================================
+   * =========================================================
    */
 
-  const totalResponses =
-    responses.length;
+  const totalResponses = responses.length;
 
 
   /*
-   * =====================================================
-   * QUESTION DISTRIBUTIONS
-   * =====================================================
+   * =========================================================
+   * DISTRIBUTIONS
+   * =========================================================
    */
 
-  const ageDistribution =
-    useMemo(() => {
-      return sortDistribution(
-        getDistribution(
-          responses,
-          "q2"
-        ),
+  const ageDistribution = useMemo(
+    () =>
+      sortDistribution(
+        getDistribution(responses, "q2"),
         questionMetadata.q2.order
-      );
-    }, [responses]);
+      ),
+    [responses]
+  );
 
-
-  const genderDistribution =
-    useMemo(() => {
-      return sortDistribution(
-        getDistribution(
-          responses,
-          "q3"
-        ),
+  const genderDistribution = useMemo(
+    () =>
+      sortDistribution(
+        getDistribution(responses, "q3"),
         questionMetadata.q3.order
-      );
-    }, [responses]);
+      ),
+    [responses]
+  );
 
-
-  const livingInIzmirDistribution =
-    useMemo(() => {
-      return sortDistribution(
-        getDistribution(
-          responses,
-          "q4"
-        ),
+  const livingInIzmirDistribution = useMemo(
+    () =>
+      sortDistribution(
+        getDistribution(responses, "q4"),
         questionMetadata.q4.order
-      );
-    }, [responses]);
+      ),
+    [responses]
+  );
 
-
-  const employmentDistribution =
-    useMemo(() => {
-      return sortDistribution(
-        getDistribution(
-          responses,
-          "q9"
-        ),
+  const employmentDistribution = useMemo(
+    () =>
+      sortDistribution(
+        getDistribution(responses, "q9"),
         questionMetadata.q9.order
-      );
-    }, [responses]);
+      ),
+    [responses]
+  );
 
-
-  const futurePlansDistribution =
-    useMemo(() => {
-      return sortDistribution(
-        getDistribution(
-          responses,
-          "q16"
-        ),
+  const futurePlansDistribution = useMemo(
+    () =>
+      sortDistribution(
+        getDistribution(responses, "q16"),
         questionMetadata.q16.order
-      );
-    }, [responses]);
+      ),
+    [responses]
+  );
 
-
-  /*
-   * q19 = multiple choice
-   */
-
-  const challengesDistribution =
-    useMemo(() => {
-      return sortDistribution(
+  const challengesDistribution = useMemo(
+    () =>
+      sortDistribution(
         getMultipleChoiceDistribution(
           responses,
           "q19"
         ),
         questionMetadata.q19.order
-      );
-    }, [responses]);
+      ),
+    [responses]
+  );
+
+  const languageDistribution = useMemo(
+    () =>
+      getLanguageDistribution(responses),
+    [responses]
+  );
 
 
   /*
-   * =====================================================
-   * LANGUAGE ANALYTICS
-   * =====================================================
+   * =========================================================
+   * SCALE / GRID ANALYTICS
+   * =========================================================
    */
 
-  const languageDistribution =
-    useMemo(() => {
-      return getLanguageDistribution(
-        responses
-      );
-    }, [responses]);
-
-
-  /*
-   * =====================================================
-   * SCALE ANALYTICS
-   * =====================================================
-   */
-
-  const experienceAnalytics =
-    useMemo(() => {
-      return getScaleAnalytics(
+  const experienceAnalytics = useMemo(
+    () =>
+      getScaleAnalytics(
         responses,
         "q14"
-      );
-    }, [responses]);
+      ),
+    [responses]
+  );
 
-
-  /*
-   * =====================================================
-   * GRID ANALYTICS
-   * =====================================================
-   *
-   * q15 uses:
-   *
-   * very_dissatisfied = 1
-   * dissatisfied      = 2
-   * neutral           = 3
-   * satisfied         = 4
-   * very_satisfied    = 5
-   *
-   */
-
-  const satisfactionAnalytics =
-    useMemo(() => {
-      return getGridScoreAnalytics(
+  const satisfactionAnalytics = useMemo(
+    () =>
+      getGridScoreAnalytics(
         responses,
         "q15",
         questionMetadata.q15.columns
-      );
-    }, [responses]);
+      ),
+    [responses]
+  );
 
 
   /*
-   * =====================================================
+   * =========================================================
    * TEXT RESPONSES
-   * =====================================================
+   * =========================================================
    */
 
-  const recommendationResponses =
-    useMemo(() => {
-      return getTextResponses(
+  const recommendationResponses = useMemo(
+    () =>
+      getTextResponses(
         responses,
         "q23"
-      );
-    }, [responses]);
+      ),
+    [responses]
+  );
 
-
-  const isocResponses =
-    useMemo(() => {
-      return getTextResponses(
+  const isocResponses = useMemo(
+    () =>
+      getTextResponses(
         responses,
         "q21"
-      );
-    }, [responses]);
+      ),
+    [responses]
+  );
 
 
   /*
-   * =====================================================
+   * =========================================================
    * RESPONSE RATES
-   * =====================================================
+   * =========================================================
    */
 
-  const experienceResponseRate =
-    useMemo(() => {
-      return getQuestionResponseRate(
+  const experienceResponseRate = useMemo(
+    () =>
+      getQuestionResponseRate(
         responses,
         "q14"
-      );
-    }, [responses]);
+      ),
+    [responses]
+  );
 
-
-  const futurePlanResponseRate =
-    useMemo(() => {
-      return getQuestionResponseRate(
+  const futurePlanResponseRate = useMemo(
+    () =>
+      getQuestionResponseRate(
         responses,
         "q16"
-      );
-    }, [responses]);
+      ),
+    [responses]
+  );
 
 
   /*
-   * =====================================================
-   * HELPER FUNCTIONS
-   * =====================================================
+   * =========================================================
+   * OPTION LABEL HELPER
+   * =========================================================
    */
 
-  const getYesPercentage = (
-    distribution
-  ) => {
-    const yesAnswer =
-      distribution.find(
-        (item) =>
-          String(item.value).toLowerCase() ===
-          "yes"
-      );
-
-    if (!yesAnswer) {
-      return 0;
-    }
-
-    return calculatePercentage(
-      yesAnswer.count,
-      responses.length
-    );
-  };
-
-
-  /*
-   * =====================================================
-   * STAT CARD VALUES
-   * =====================================================
-   */
-
-  const livingInIzmir =
-    getYesPercentage(
-      livingInIzmirDistribution
-    );
-
-
-  const stayingInTurkey =
-    getYesPercentage(
-      futurePlansDistribution
-    );
-
-
-  /*
-   * =====================================================
-   * LABEL HELPERS
-   * =====================================================
-   *
-   * Converts database values such as:
-   *
-   * "18_24"
-   *
-   * into:
-   *
-   * "18–24"
-   *
-   */
-
-  const getQuestionLabel = (
+  function getOptionLabel(
     questionId,
     value
-  ) => {
-    const metadata =
+  ) {
+    const question =
       questionMetadata[questionId];
 
-    if (!metadata) {
+    if (!question?.options) {
       return value;
     }
 
-    if (metadata.options) {
-      const option =
-        metadata.options.find(
-          (item) =>
-            item.value === value
-        );
+    const option =
+      question.options.find(
+        (item) =>
+          item.value === value
+      );
 
-      if (option) {
-        return option.label;
-      }
-    }
-
-    if (
-      metadata.rows
-    ) {
-      const row =
-        metadata.rows.find(
-          (item) =>
-            item.value === value
-        );
-
-      if (row) {
-        return row.label;
-      }
-    }
-
-    if (
-      metadata.columns
-    ) {
-      const column =
-        metadata.columns.find(
-          (item) =>
-            item.value === value
-        );
-
-      if (column) {
-        return column.label;
-      }
-    }
-
-    const fallbackLabels = {
-      yes: "Yes",
-      no: "No",
-      undecided: "Undecided",
-
-      male: "Male",
-      female: "Female",
-      prefer_not_to_say:
-        "Prefer not to say",
-      other: "Other",
-
-      under_18: "Under 18",
-      "18_24": "18–24",
-      "25_34": "25–34",
-      "35_44": "35–44",
-      "45_54": "45–54",
-      "55_plus":
-        "55 years and above",
-
-      employed_full_time:
-        "Employed full-time",
-      employed_part_time:
-        "Employed part-time",
-      self_employed:
-        "Self-employed",
-      student_only:
-        "Student only",
-      unemployed:
-        "Unemployed",
-      intern: "Intern",
-
-      very_dissatisfied:
-        "Very Dissatisfied",
-      dissatisfied:
-        "Dissatisfied",
-      neutral: "Neutral",
-      satisfied: "Satisfied",
-      very_satisfied:
-        "Very Satisfied",
-    };
-
-    return (
-      fallbackLabels[value] ||
-      value
-    );
-  };
+    return option?.label || value;
+  }
 
 
   /*
-   * =====================================================
-   * CHART DATA TRANSFORMATIONS
-   * =====================================================
+   * =========================================================
+   * CHART DATA
+   * =========================================================
    */
 
-  const ageData =
-    useMemo(() => {
-      return ageDistribution.map(
+  const ageData = Array.isArray(ageDistribution)
+    ? ageDistribution.map(
         (item) => ({
-          name: getQuestionLabel(
+          name: getOptionLabel(
             "q2",
             item.value
           ),
           value: item.count,
         })
-      );
-    }, [ageDistribution]);
+      )
+    : [];
 
-
-  const genderData =
-    useMemo(() => {
-      return genderDistribution.map(
+  const genderData = Array.isArray(
+    genderDistribution
+  )
+    ? genderDistribution.map(
         (item) => ({
-          name: getQuestionLabel(
+          name: getOptionLabel(
             "q3",
             item.value
           ),
           value: item.count,
         })
-      );
-    }, [genderDistribution]);
+      )
+    : [];
 
+  const livingInIzmirData =
+    Array.isArray(
+      livingInIzmirDistribution
+    )
+      ? livingInIzmirDistribution.map(
+          (item) => ({
+            name: getOptionLabel(
+              "q4",
+              item.value
+            ),
+            value: item.count,
+          })
+        )
+      : [];
 
   const employmentData =
-    useMemo(() => {
-      return employmentDistribution.map(
-        (item) => ({
-          name: getQuestionLabel(
-            "q9",
-            item.value
-          ),
-          value: item.count,
-        })
-      );
-    }, [employmentDistribution]);
-
+    Array.isArray(
+      employmentDistribution
+    )
+      ? employmentDistribution.map(
+          (item) => ({
+            name: getOptionLabel(
+              "q9",
+              item.value
+            ),
+            value: item.count,
+          })
+        )
+      : [];
 
   const futurePlansData =
-    useMemo(() => {
-      return futurePlansDistribution.map(
-        (item) => ({
-          name: getQuestionLabel(
-            "q16",
-            item.value
-          ),
-          value: item.count,
-        })
-      );
-    }, [futurePlansDistribution]);
-
+    Array.isArray(
+      futurePlansDistribution
+    )
+      ? futurePlansDistribution.map(
+          (item) => ({
+            name: getOptionLabel(
+              "q16",
+              item.value
+            ),
+            value: item.count,
+          })
+        )
+      : [];
 
   const challengesData =
-    useMemo(() => {
-      return challengesDistribution.map(
-        (item) => ({
-          name: getQuestionLabel(
-            "q19",
-            item.value
-          ),
-          value: item.count,
-        })
-      );
-    }, [challengesDistribution]);
-
+    Array.isArray(
+      challengesDistribution
+    )
+      ? challengesDistribution.map(
+          (item) => ({
+            name: getOptionLabel(
+              "q19",
+              item.value
+            ),
+            value: item.count,
+          })
+        )
+      : [];
 
   /*
-   * =====================================================
-   * LANGUAGE CHART DATA
-   * =====================================================
+   * Language analytics uses:
+   *
+   * {
+   *   language,
+   *   count,
+   *   percentage
+   * }
+   *
+   * rather than:
+   *
+   * {
+   *   value,
+   *   count
+   * }
    */
 
   const languageData =
-    useMemo(() => {
-      const labels = {
-        en: "English",
-        tr: "Turkish",
-        fr: "French",
-        ru: "Russian",
-      };
-
-      return languageDistribution.map(
-        (item) => ({
-          name:
-            labels[item.language] ||
-            item.language.toUpperCase(),
-          value: item.count,
-        })
-      );
-    }, [languageDistribution]);
+    Array.isArray(
+      languageDistribution
+    )
+      ? languageDistribution.map(
+          (item) => ({
+            name: item.language,
+            value: item.count,
+          })
+        )
+      : [];
 
 
   /*
-   * =====================================================
-   * SATISFACTION CHART DATA
-   * =====================================================
+   * =========================================================
+   * SATISFACTION GRID DATA
+   *
+   * getGridScoreAnalytics() returns an OBJECT.
+   *
+   * Example:
+   *
+   * {
+   *   housing: {
+   *     count: 10,
+   *     totalScore: 35,
+   *     average: 3.5
+   *   }
+   * }
+   *
+   * Recharts requires an ARRAY.
+   *
+   * Therefore we convert Object.entries(...)
+   * into:
+   *
+   * [
+   *   {
+   *     name: "Housing",
+   *     value: 3.5
+   *   }
+   * ]
+   * =========================================================
    */
 
   const satisfactionData =
-    useMemo(() => {
-      return questionMetadata.q15.rows.map(
-        (row) => ({
-          name: row.label,
-          value:
-            satisfactionAnalytics[
-              row.value
-            ]?.average || 0,
-        })
-      );
-    }, [satisfactionAnalytics]);
+    satisfactionAnalytics &&
+    typeof satisfactionAnalytics ===
+      "object" &&
+    !Array.isArray(
+      satisfactionAnalytics
+    )
+      ? Object.entries(
+          satisfactionAnalytics
+        ).map(
+          ([row, result]) => ({
+            name:
+              questionMetadata.q15.rows.find(
+                (item) =>
+                  item.value === row
+              )?.label || row,
+
+            value:
+              Number(
+                result.average
+              ) || 0,
+          })
+        )
+      : [];
 
 
   /*
-   * =====================================================
-   * RENDER - LOADING
-   * =====================================================
+   * =========================================================
+   * STAT CARD VALUES
+   * =========================================================
+   */
+
+  const livingInIzmirYes =
+    livingInIzmirDistribution.find(
+      (item) =>
+        item.value === "yes"
+    )?.count || 0;
+
+  const livingInIzmirPercentage =
+    calculatePercentage(
+      livingInIzmirYes,
+      totalResponses
+    );
+
+  const futurePlansYes =
+    futurePlansDistribution.find(
+      (item) =>
+        item.value === "yes"
+    )?.count || 0;
+
+  const futurePlansPercentage =
+    calculatePercentage(
+      futurePlansYes,
+      totalResponses
+    );
+
+  const averageExperience =
+    experienceAnalytics?.average || 0;
+
+
+  /*
+   * =========================================================
+   * LOADING STATE
+   * =========================================================
    */
 
   if (loading) {
@@ -608,17 +521,11 @@ function Admin() {
             totalResponses={0}
           />
 
-          <section className="admin-content">
-            <div className="admin-loading">
-              <h2>
-                Loading dashboard...
-              </h2>
-
-              <p>
-                Retrieving survey responses.
-              </p>
-            </div>
-          </section>
+          <div className="admin-loading">
+            <p>
+              Loading survey responses...
+            </p>
+          </div>
         </main>
       </div>
     );
@@ -626,9 +533,9 @@ function Admin() {
 
 
   /*
-   * =====================================================
-   * RENDER - ERROR
-   * =====================================================
+   * =========================================================
+   * ERROR STATE
+   * =========================================================
    */
 
   if (error) {
@@ -646,24 +553,13 @@ function Admin() {
             totalResponses={0}
           />
 
-          <section className="admin-content">
-            <div className="admin-error">
-              <h2>
-                Unable to load dashboard
-              </h2>
+          <div className="admin-error">
+            <h2>
+              Unable to load responses
+            </h2>
 
-              <p>
-                {error}
-              </p>
-
-              <p>
-                Please check that the
-                FastAPI server is running
-                and that VITE_API_URL is
-                configured correctly.
-              </p>
-            </div>
-          </section>
+            <p>{error}</p>
+          </div>
         </main>
       </div>
     );
@@ -671,13 +567,17 @@ function Admin() {
 
 
   /*
-   * =====================================================
+   * =========================================================
    * RENDER
-   * =====================================================
+   * =========================================================
    */
 
   return (
     <div className="admin-layout">
+
+      {/* =====================================================
+          SIDEBAR
+          ===================================================== */}
 
       <AdminSidebar
         activeSection={activeSection}
@@ -686,605 +586,509 @@ function Admin() {
         }
       />
 
+
+      {/* =====================================================
+          MAIN CONTENT
+          ===================================================== */}
+
       <main className="admin-main">
 
         <AdminHeader
           totalResponses={
             totalResponses
           }
+          onExport={() =>
+            exportResponsesToCSV(
+              responses
+            )
+          }
         />
 
-        <section className="admin-content">
+
+        <div className="admin-content">
+
 
           {/* =================================================
               OVERVIEW
-          ================================================= */}
+              ================================================= */}
 
           {activeSection ===
             "overview" && (
-            <>
-              <div className="stats-grid">
+            <section className="admin-section">
 
-                <StatCard
-                  label="Total Responses"
-                  value={
-                    totalResponses
-                  }
-                  description="Survey participants"
-                  icon={
-                    <Users size={20} />
-                  }
-                />
+              <div className="section-heading">
+                <h2>
+                  Survey Overview
+                </h2>
 
-                <StatCard
-                  label="Living in İzmir"
-                  value={`${livingInIzmir.toFixed(
-                    0
-                  )}%`}
-                  description="Current residents"
-                  icon={
-                    <MapPin size={20} />
-                  }
-                />
-
-                <StatCard
-                  label="Average Experience"
-                  value={`${experienceAnalytics.average.toFixed(
-                    1
-                  )}/10`}
-                  description="Overall Türkiye rating"
-                  icon={
-                    <Star size={20} />
-                  }
-                />
-
-                <StatCard
-                  label="Plan to Stay"
-                  value={`${stayingInTurkey.toFixed(
-                    0
-                  )}%`}
-                  description="Intend to remain"
-                  icon={
-                    <Compass size={20} />
-                  }
-                />
+                <p>
+                  Overview of all
+                  submitted
+                  questionnaire
+                  responses.
+                </p>
               </div>
 
 
-              <div className="dashboard-grid">
+              <div className="stats-grid">
 
-                {/* AGE */}
+                <StatCard
+                  title="Total Responses"
+                  value={
+                    totalResponses
+                  }
+                  icon={Users}
+                />
+
+                <StatCard
+                  title="Living in İzmir"
+                  value={`${livingInIzmirPercentage}%`}
+                  icon={MapPin}
+                />
+
+                <StatCard
+                  title="Average Experience"
+                  value={
+                    averageExperience
+                      ? `${averageExperience}/10`
+                      : "—"
+                  }
+                  icon={Star}
+                />
+
+                <StatCard
+                  title="Plan to Stay"
+                  value={`${futurePlansPercentage}%`}
+                  icon={Compass}
+                />
+
+              </div>
+
+
+              <div className="charts-grid">
 
                 <ChartCard
                   title="Age Distribution"
                   subtitle="Participant age groups"
-                >
-                  <ResponsiveContainer
-                    width="100%"
-                    height={300}
-                  >
-                    <BarChart
-                      data={ageData}
-                    >
-                      <XAxis
-                        dataKey="name"
-                      />
-
-                      <YAxis />
-
-                      <Tooltip />
-
-                      <Bar
-                        dataKey="value"
-                        radius={[
-                          6,
-                          6,
-                          0,
-                          0,
-                        ]}
-                      />
-                    </BarChart>
-                  </ResponsiveContainer>
-                </ChartCard>
-
-
-                {/* GENDER */}
+                  data={ageData}
+                  type="bar"
+                />
 
                 <ChartCard
                   title="Gender Distribution"
                   subtitle="Participant demographics"
-                >
-                  <ResponsiveContainer
-                    width="100%"
-                    height={300}
-                  >
-                    <PieChart>
-
-                      <Pie
-                        data={genderData}
-                        dataKey="value"
-                        nameKey="name"
-                        outerRadius={100}
-                        innerRadius={55}
-                      >
-                        {genderData.map(
-                          (
-                            entry,
-                            index
-                          ) => (
-                            <Cell
-                              key={`gender-${index}`}
-                            />
-                          )
-                        )}
-                      </Pie>
-
-                      <Tooltip />
-
-                    </PieChart>
-                  </ResponsiveContainer>
-                </ChartCard>
-
-
-                {/* LANGUAGE */}
+                  data={genderData}
+                  type="pie"
+                />
 
                 <ChartCard
-                  title="Responses by Language"
-                  subtitle="Questionnaire language distribution"
-                >
-                  <ResponsiveContainer
-                    width="100%"
-                    height={300}
-                  >
-                    <PieChart>
+                  title="Languages"
+                  subtitle="Questionnaire language used"
+                  data={languageData}
+                  type="pie"
+                />
 
-                      <Pie
-                        data={languageData}
-                        dataKey="value"
-                        nameKey="name"
-                        outerRadius={100}
-                        innerRadius={55}
-                      >
-                        {languageData.map(
-                          (
-                            entry,
-                            index
-                          ) => (
-                            <Cell
-                              key={`language-${index}`}
-                            />
-                          )
-                        )}
-                      </Pie>
-
-                      <Tooltip />
-
-                    </PieChart>
-                  </ResponsiveContainer>
-                </ChartCard>
+                <ChartCard
+                  title="Living in İzmir"
+                  subtitle="Current residence status"
+                  data={
+                    livingInIzmirData
+                  }
+                  type="pie"
+                />
 
               </div>
-            </>
+
+            </section>
           )}
 
 
           {/* =================================================
               DEMOGRAPHICS
-          ================================================= */}
+              ================================================= */}
 
           {activeSection ===
             "demographics" && (
-            <div className="dashboard-grid">
+            <section className="admin-section">
 
-              <ChartCard
-                title="Age Groups"
-                subtitle="Participant age distribution"
-              >
-                <ResponsiveContainer
-                  width="100%"
-                  height={350}
-                >
-                  <BarChart
-                    data={ageData}
-                  >
-                    <XAxis
-                      dataKey="name"
-                    />
+              <div className="section-heading">
+                <h2>
+                  Demographics
+                </h2>
 
-                    <YAxis />
-
-                    <Tooltip />
-
-                    <Bar
-                      dataKey="value"
-                    />
-                  </BarChart>
-                </ResponsiveContainer>
-              </ChartCard>
+                <p>
+                  Demographic
+                  characteristics
+                  of survey
+                  participants.
+                </p>
+              </div>
 
 
-              <ChartCard
-                title="Gender"
-                subtitle="Participant gender distribution"
-              >
-                <ResponsiveContainer
-                  width="100%"
-                  height={350}
-                >
-                  <PieChart>
+              <div className="charts-grid">
 
-                    <Pie
-                      data={genderData}
-                      dataKey="value"
-                      nameKey="name"
-                      outerRadius={110}
-                    >
-                      {genderData.map(
-                        (
-                          entry,
-                          index
-                        ) => (
-                          <Cell
-                            key={`gender-demographic-${index}`}
-                          />
-                        )
-                      )}
-                    </Pie>
+                <ChartCard
+                  title="Age Distribution"
+                  subtitle="Participant age groups"
+                  data={ageData}
+                  type="bar"
+                />
 
-                    <Tooltip />
+                <ChartCard
+                  title="Gender Distribution"
+                  subtitle="Participant gender"
+                  data={genderData}
+                  type="pie"
+                />
 
-                  </PieChart>
-                </ResponsiveContainer>
-              </ChartCard>
+                <ChartCard
+                  title="Living in İzmir"
+                  subtitle="Whether participants currently live in İzmir"
+                  data={
+                    livingInIzmirData
+                  }
+                  type="pie"
+                />
 
+              </div>
 
-              <ChartCard
-                title="Questionnaire Languages"
-                subtitle="Responses by questionnaire language"
-              >
-                <ResponsiveContainer
-                  width="100%"
-                  height={350}
-                >
-                  <BarChart
-                    data={languageData}
-                  >
-                    <XAxis
-                      dataKey="name"
-                    />
-
-                    <YAxis />
-
-                    <Tooltip />
-
-                    <Bar
-                      dataKey="value"
-                    />
-                  </BarChart>
-                </ResponsiveContainer>
-              </ChartCard>
-
-            </div>
+            </section>
           )}
 
 
           {/* =================================================
               EMPLOYMENT
-          ================================================= */}
+              ================================================= */}
 
           {activeSection ===
             "employment" && (
-            <ChartCard
-              title="Employment Status"
-              subtitle="Current employment distribution"
-            >
-              <ResponsiveContainer
-                width="100%"
-                height={400}
-              >
-                <BarChart
-                  data={employmentData}
+            <section className="admin-section">
+
+              <div className="section-heading">
+                <h2>
+                  Employment
+                </h2>
+
+                <p>
+                  Employment and
+                  career-related
+                  responses.
+                </p>
+              </div>
+
+
+              <div className="charts-grid">
+
+                <ChartCard
+                  title="Employment Status"
+                  subtitle="Current employment distribution"
+                  data={
+                    employmentData
+                  }
+                  type="bar"
                   layout="vertical"
-                  margin={{
-                    left: 20,
-                    right: 20,
-                  }}
-                >
-                  <XAxis
-                    type="number"
-                  />
+                  height={360}
+                  yAxisWidth={170}
+                />
 
-                  <YAxis
-                    type="category"
-                    dataKey="name"
-                    width={160}
-                  />
+                <ChartCard
+                  title="Employment Response Rate"
+                  subtitle="Participants who provided employment information"
+                  data={[
+                    {
+                      name: "Responded",
+                      value:
+                        getQuestionResponseRate(
+                          responses,
+                          "q9"
+                        ),
+                    },
+                  ]}
+                  type="bar"
+                  xDomain={[
+                    0,
+                    100,
+                  ]}
+                />
 
-                  <Tooltip />
+              </div>
 
-                  <Bar
-                    dataKey="value"
-                  />
-
-                </BarChart>
-              </ResponsiveContainer>
-            </ChartCard>
+            </section>
           )}
 
 
           {/* =================================================
               LIVING EXPERIENCE
-          ================================================= */}
+              ================================================= */}
 
           {activeSection ===
             "experience" && (
-            <>
-              <div className="stats-grid">
+            <section className="admin-section">
 
-                <StatCard
-                  label="Average"
-                  value={`${experienceAnalytics.average}/10`}
-                  description="Average experience score"
-                  icon={
-                    <Star size={20} />
-                  }
+              <div className="section-heading">
+                <h2>
+                  Living Experience
+                </h2>
+
+                <p>
+                  Participants'
+                  experiences of
+                  living in
+                  Türkiye and
+                  İzmir.
+                </p>
+              </div>
+
+
+              <div className="charts-grid">
+
+                <ChartCard
+                  title="Overall Experience"
+                  subtitle={`Rating from 1–10 • ${experienceResponseRate}% response rate`}
+                  data={[
+                    {
+                      name: "Average",
+                      value:
+                        Number(
+                          averageExperience
+                        ) || 0,
+                    },
+                  ]}
+                  type="bar"
+                  xDomain={[
+                    0,
+                    10,
+                  ]}
                 />
 
-                <StatCard
-                  label="Median"
-                  value={`${experienceAnalytics.median}/10`}
-                  description="Median experience score"
-                  icon={
-                    <Star size={20} />
+                <ChartCard
+                  title="Satisfaction by Area"
+                  subtitle="Average satisfaction score"
+                  data={
+                    satisfactionData
                   }
-                />
-
-                <StatCard
-                  label="Minimum"
-                  value={`${experienceAnalytics.min}/10`}
-                  description="Lowest score"
-                  icon={
-                    <Star size={20} />
-                  }
-                />
-
-                <StatCard
-                  label="Maximum"
-                  value={`${experienceAnalytics.max}/10`}
-                  description="Highest score"
-                  icon={
-                    <Star size={20} />
-                  }
+                  type="bar"
+                  layout="vertical"
+                  xDomain={[
+                    0,
+                    5,
+                  ]}
+                  height={360}
+                  yAxisWidth={180}
                 />
 
               </div>
 
-
-              <ChartCard
-                title="Satisfaction Overview"
-                subtitle={`Average satisfaction score • ${experienceResponseRate}% response rate`}
-              >
-                <ResponsiveContainer
-                  width="100%"
-                  height={450}
-                >
-                  <BarChart
-                    data={
-                      satisfactionData
-                    }
-                    layout="vertical"
-                  >
-                    <XAxis
-                      type="number"
-                      domain={[0, 5]}
-                    />
-
-                    <YAxis
-                      type="category"
-                      dataKey="name"
-                      width={180}
-                    />
-
-                    <Tooltip />
-
-                    <Bar
-                      dataKey="value"
-                    />
-
-                  </BarChart>
-                </ResponsiveContainer>
-              </ChartCard>
-            </>
+            </section>
           )}
 
 
           {/* =================================================
               FUTURE PLANS
-          ================================================= */}
+              ================================================= */}
 
           {activeSection ===
             "future" && (
-            <ChartCard
-              title="Future Plans"
-              subtitle={`Intentions regarding remaining in Türkiye • ${futurePlanResponseRate}% response rate`}
-            >
-              <ResponsiveContainer
-                width="100%"
-                height={400}
-              >
-                <PieChart>
+            <section className="admin-section">
 
-                  <Pie
-                    data={
-                      futurePlansData
-                    }
-                    dataKey="value"
-                    nameKey="name"
-                    outerRadius={140}
-                  >
-                    {futurePlansData.map(
-                      (
-                        entry,
-                        index
-                      ) => (
-                        <Cell
-                          key={`future-${index}`}
-                        />
-                      )
-                    )}
-                  </Pie>
+              <div className="section-heading">
+                <h2>
+                  Future Plans
+                </h2>
 
-                  <Tooltip />
+                <p>
+                  Participants'
+                  intentions
+                  regarding
+                  their future
+                  in Türkiye.
+                </p>
+              </div>
 
-                </PieChart>
-              </ResponsiveContainer>
-            </ChartCard>
+
+              <div className="charts-grid">
+
+                <ChartCard
+                  title="Future Plans"
+                  subtitle={`Intentions regarding remaining in Türkiye • ${futurePlanResponseRate}% response rate`}
+                  data={
+                    futurePlansData
+                  }
+                  type="pie"
+                />
+
+              </div>
+
+            </section>
           )}
 
 
           {/* =================================================
               CHALLENGES
-          ================================================= */}
+              ================================================= */}
 
           {activeSection ===
             "challenges" && (
-            <ChartCard
-              title="Most Common Challenges"
-              subtitle="Challenges experienced by participants"
-            >
-              <ResponsiveContainer
-                width="100%"
-                height={450}
-              >
-                <BarChart
+            <section className="admin-section">
+
+              <div className="section-heading">
+                <h2>
+                  Challenges
+                </h2>
+
+                <p>
+                  Common
+                  challenges
+                  reported by
+                  participants.
+                </p>
+              </div>
+
+
+              <div className="charts-grid">
+
+                <ChartCard
+                  title="Reported Challenges"
+                  subtitle="Challenges experienced by participants"
                   data={
                     challengesData
                   }
+                  type="bar"
                   layout="vertical"
-                  margin={{
-                    left: 20,
-                    right: 20,
-                  }}
-                >
-                  <XAxis
-                    type="number"
-                  />
+                  height={420}
+                  yAxisWidth={200}
+                />
 
-                  <YAxis
-                    type="category"
-                    dataKey="name"
-                    width={220}
-                  />
+              </div>
 
-                  <Tooltip />
-
-                  <Bar
-                    dataKey="value"
-                  />
-
-                </BarChart>
-              </ResponsiveContainer>
-            </ChartCard>
+            </section>
           )}
 
 
           {/* =================================================
               FEEDBACK
-          ================================================= */}
+              ================================================= */}
 
           {activeSection ===
             "feedback" && (
-            <div className="feedback-list">
+            <section className="admin-section">
 
-              {responses.length ===
-                0 && (
+              <div className="section-heading">
+                <h2>
+                  Participant Feedback
+                </h2>
+
+                <p>
+                  Open-ended responses
+                  from participants.
+                </p>
+              </div>
+
+
+              <div className="feedback-grid">
+
+                {/* RECOMMENDATIONS */}
+
                 <ChartCard
-                  title="No Feedback"
-                  subtitle="There are currently no survey responses."
+                  title="Recommendations"
+                  subtitle={`${recommendationResponses.length} responses`}
                 >
-                  <p>
-                    No responses are
-                    available yet.
-                  </p>
-                </ChartCard>
-              )}
+                  <div className="text-response-list">
 
-
-              {responses.map(
-                (response) => {
-
-                  const recommendation =
-                    recommendationResponses.find(
-                      (item) =>
-                        item.id ===
-                        response.id
-                    );
-
-                  const isocExperience =
-                    isocResponses.find(
-                      (item) =>
-                        item.id ===
-                        response.id
-                    );
-
-                  return (
-                    <ChartCard
-                      key={
-                        response.id
-                      }
-                      title={`Response ${response.id.slice(
-                        0,
-                        8
-                      )}`}
-                      subtitle={`${response.language?.toUpperCase() || "N/A"} • ${new Date(
-                        response.created_at
-                      ).toLocaleDateString()}`}
-                    >
-
-                      <div className="feedback-item">
-
-                        <h4>
-                          Final Recommendation
-                        </h4>
-
-                        <p>
-                          {recommendation?.answer ||
-                            "No response provided."}
-                        </p>
-
+                    {recommendationResponses.length ===
+                    0 ? (
+                      <div className="chart-empty">
+                        No responses available yet.
                       </div>
-
-
-                      {isocExperience && (
-                        <div className="feedback-item">
-
-                          <h4>
-                            ISOC Experience
-                          </h4>
-
-                          <p>
-                            {
-                              isocExperience.answer
+                    ) : (
+                      recommendationResponses.map(
+                        (
+                          response,
+                          index
+                        ) => (
+                          <div
+                            className="text-response"
+                            key={
+                              response.id ||
+                              index
                             }
-                          </p>
+                          >
+                            <p>
+                              {
+                                response.answer
+                              }
+                            </p>
 
-                        </div>
-                      )}
+                            <span>
+                              {
+                                response.language
+                              }
+                            </span>
+                          </div>
+                        )
+                      )
+                    )}
 
-                    </ChartCard>
-                  );
-                }
-              )}
+                  </div>
+                </ChartCard>
 
-            </div>
+
+                {/* ISOC EXPERIENCE */}
+
+                <ChartCard
+                  title="ISOC Experience"
+                  subtitle={`${isocResponses.length} responses`}
+                >
+                  <div className="text-response-list">
+
+                    {isocResponses.length ===
+                    0 ? (
+                      <div className="chart-empty">
+                        No responses available yet.
+                      </div>
+                    ) : (
+                      isocResponses.map(
+                        (
+                          response,
+                          index
+                        ) => (
+                          <div
+                            className="text-response"
+                            key={
+                              response.id ||
+                              index
+                            }
+                          >
+                            <p>
+                              {
+                                response.answer
+                              }
+                            </p>
+
+                            <span>
+                              {
+                                response.language
+                              }
+                            </span>
+                          </div>
+                        )
+                      )
+                    )}
+
+                  </div>
+                </ChartCard>
+
+              </div>
+
+            </section>
           )}
 
-        </section>
+        </div>
 
       </main>
+
     </div>
   );
 }
-
 
 export default Admin;

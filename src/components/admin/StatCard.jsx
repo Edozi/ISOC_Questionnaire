@@ -1,31 +1,32 @@
 function StatCard({
+  title,
   label,
   value,
   description,
   icon,
 }) {
+  const Icon = icon;
+
   return (
     <div className="stat-card">
 
       <div className="stat-card-top">
 
         <span className="stat-label">
-          {label}
+          {title || label}
         </span>
 
-        {icon && (
+        {Icon && (
           <div className="stat-icon">
-            {icon}
+            <Icon size={20} />
           </div>
         )}
 
       </div>
 
-
       <div className="stat-value">
         {value}
       </div>
-
 
       {description && (
         <div className="stat-description">
@@ -36,6 +37,5 @@ function StatCard({
     </div>
   );
 }
-
 
 export default StatCard;

@@ -7,13 +7,18 @@ import {
 
 import QuestionnaireApp from "./pages/QuestionnaireApp";
 import Admin from "./pages/Admin";
+import AdminLogin from "./pages/AdminLogin";
+import AdminRoute from "./components/admin/AdminRoute";
 
 function App() {
   return (
     <BrowserRouter>
       <Routes>
 
-        {/* Redirect root to questionnaire */}
+        {/* ==========================================
+            ROOT
+            ========================================== */}
+
         <Route
           path="/"
           element={
@@ -24,19 +29,47 @@ function App() {
           }
         />
 
-        {/* Public questionnaire */}
+
+        {/* ==========================================
+            PUBLIC QUESTIONNAIRE
+            ========================================== */}
+
         <Route
           path="/questionnaire"
           element={<QuestionnaireApp />}
         />
 
-        {/* Admin */}
+
+        {/* ==========================================
+            ADMIN LOGIN
+            PUBLIC
+            ========================================== */}
+
         <Route
-          path="/admin"
-          element={<Admin />}
+          path="/admin/login"
+          element={<AdminLogin />}
         />
 
-        {/* Unknown routes */}
+
+        {/* ==========================================
+            ADMIN DASHBOARD
+            PROTECTED
+            ========================================== */}
+
+        <Route
+          path="/admin"
+          element={
+            <AdminRoute>
+              <Admin />
+            </AdminRoute>
+          }
+        />
+
+
+        {/* ==========================================
+            UNKNOWN ROUTES
+            ========================================== */}
+
         <Route
           path="*"
           element={
