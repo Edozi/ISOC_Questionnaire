@@ -9,6 +9,8 @@ import QuestionnaireApp from "./pages/QuestionnaireApp";
 import Admin from "./pages/Admin";
 import AdminLogin from "./pages/AdminLogin";
 import AdminRoute from "./components/admin/AdminRoute";
+import RegistrationPage from "./pages/RegistrationPage";
+import AttendeePage from "./pages/AttendeePage";
 
 function App() {
   return (
@@ -37,6 +39,24 @@ function App() {
         <Route
           path="/questionnaire"
           element={<QuestionnaireApp />}
+        />
+
+        {/* ==========================================
+            PUBLIC REGISTRATION FORM
+            ========================================== */}
+
+        <Route
+          path="/registration"
+          element={<RegistrationPage />}
+        />
+
+        {/* ==========================================
+            ATTENDEE ROUTE
+            ========================================== */}
+
+        <Route
+          path="/attendee/:token"
+          element={<AttendeePage />}
         />
 
 
