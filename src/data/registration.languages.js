@@ -1,6 +1,6 @@
 const registrationTranslations = {
   en: {
-    brand: "ISOC",
+    brand: "BRIGHTLAND CORPORATION",
     title: "Register for ISOC",
     subtitle:
       "Join us for the International Student Orientation Camp and be part of the experience.",
@@ -68,7 +68,7 @@ const registrationTranslations = {
   },
 
   tr: {
-    brand: "ISOC",
+    brand: "BRIGHTLAND CORPORATION",
     title: "ISOC'ye Kayıt Ol",
     subtitle:
       "Uluslararası Öğrenci Oryantasyon Kampı'na katılın ve bu deneyimin bir parçası olun.",
@@ -139,7 +139,7 @@ const registrationTranslations = {
   },
 
   fr: {
-    brand: "ISOC",
+    brand: "BRIGHTLAND CORPORATION",
     title: "Inscrivez-vous à l'ISOC",
     subtitle:
       "Rejoignez-nous pour le Camp d'Orientation des Étudiants Internationaux et participez à l'expérience.",
@@ -210,7 +210,7 @@ const registrationTranslations = {
   },
 
   ru: {
-    brand: "ISOC",
+    brand: "BRIGHTLAND CORPORATION",
     title: "Регистрация на ISOC",
     subtitle:
       "Присоединяйтесь к Международному студенческому ориентационному лагерю и станьте частью этого события.",

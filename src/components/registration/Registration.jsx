@@ -66,6 +66,11 @@ function Registration({
 
       <section className="registration-card">
         <div className="registration-header">
+          <img
+            src="/logo-original.png"
+            alt="Brightland"
+            className="registration-logo"
+          />
           <div className="registration-brand">
             {t.brand}
           </div>

@@ -13,9 +13,9 @@ function RegistrationPage() {
 
   const navigate = useNavigate();
 
-  useEffect(() => {
-    wakeUpBackend();
-    }, []);
+  // useEffect(() => {
+  //   wakeUpBackend();
+  //   }, []);
 
   async function handleRegistration(formData) {
     setIsSubmitting(true);

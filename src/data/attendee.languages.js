@@ -1,6 +1,6 @@
 const attendeeTranslations = {
   en: {
-    event: "ISOC 2026",
+    event: "BRIGHTLAND CORPORATION",
     attending: "I'm attending",
     eventName: "International Student Orientation Camp",
     attendee: "ATTENDEE",
@@ -16,7 +16,7 @@ const attendeeTranslations = {
   },
 
   tr: {
-    event: "ISOC 2026",
+    event: "BRIGHTLAND CORPORATION",
     attending: "Katılıyorum",
     eventName: "Uluslararası Öğrenci Oryantasyon Kampı",
     attendee: "KATILIMCI",
@@ -32,7 +32,7 @@ const attendeeTranslations = {
   },
 
   fr: {
-    event: "ISOC 2026",
+    event: "BRIGHTLAND CORPORATION",
     attending: "Je participe",
     eventName:
       "Camp international d'orientation des étudiants",
@@ -49,7 +49,7 @@ const attendeeTranslations = {
   },
 
   ru: {
-    event: "ISOC 2026",
+    event: "BRIGHTLAND CORPORATION",
     attending: "Я участвую",
     eventName:
       "Международный ориентационный лагерь для студентов",
