@@ -31,7 +31,7 @@ const registrationTranslations = {
         placeholder: "Enter your university",
       },
       education: {
-        label: "Current Education Level",
+        label: "Educational Level",
         placeholder: "Select your education level",
       },
     },
@@ -44,12 +44,12 @@ const registrationTranslations = {
     ],
 
     educationOptions: [
-      { value: "not-enrolled", label: "Not currently enrolled" },
       { value: "high-school", label: "High School" },
-      { value: "associate", label: "Associate Degree" },
-      { value: "bachelors", label: "Bachelor's Degree" },
-      { value: "masters", label: "Master's Degree" },
-      { value: "phd", label: "PhD" },
+      { value: "undergraduate", label: "Undergraduate" },
+      { value: "graduate", label: "Graduate" },
+      { value: "working", label: "Working" },
+      { value: "job-hunting", label: "Job Hunting" },
+      { value: "self-employed", label: "Self Employed" },
       { value: "other", label: "Other" },
     ],
 
@@ -99,7 +99,7 @@ const registrationTranslations = {
         placeholder: "Üniversitenizi girin",
       },
       education: {
-        label: "Mevcut Eğitim Seviyesi",
+        label: "Eğitim Seviyesi",
         placeholder: "Eğitim seviyenizi seçin",
       },
     },
@@ -112,12 +112,12 @@ const registrationTranslations = {
     ],
 
     educationOptions: [
-      { value: "not-enrolled", label: "Şu anda kayıtlı değilim" },
       { value: "high-school", label: "Lise" },
-      { value: "associate", label: "Ön Lisans" },
-      { value: "bachelors", label: "Lisans" },
-      { value: "masters", label: "Yüksek Lisans" },
-      { value: "phd", label: "Doktora" },
+      { value: "undergraduate", label: "Lisans" },
+      { value: "graduate", label: "Lisansüstü / Yüksek Lisans" },
+      { value: "working", label: "Çalışıyor" },
+      { value: "job-hunting", label: "İş Arıyor" },
+      { value: "self-employed", label: "Serbest Meslek / Kendi İşini Yapıyor" },
       { value: "other", label: "Diğer" },
     ],
 
@@ -170,7 +170,7 @@ const registrationTranslations = {
         placeholder: "Entrez votre université",
       },
       education: {
-        label: "Niveau d'études actuel",
+        label: "Niveau d'études",
         placeholder: "Sélectionnez votre niveau d'études",
       },
     },
@@ -183,15 +183,14 @@ const registrationTranslations = {
     ],
 
     educationOptions: [
-      { value: "not-enrolled", label: "Pas actuellement inscrit(e)" },
       { value: "high-school", label: "Lycée" },
-      { value: "associate", label: "Diplôme de niveau associé" },
-      { value: "bachelors", label: "Licence" },
-      { value: "masters", label: "Master" },
-      { value: "phd", label: "Doctorat" },
+      { value: "undergraduate", label: "Premier cycle universitaire (Licence)" },
+      { value: "graduate", label: "Second/Troisième cycle (Master/Doctorat)" },
+      { value: "working", label: "En emploi" },
+      { value: "job-hunting", label: "En recherche d'emploi" },
+      { value: "self-employed", label: "Travailleur indépendant" },
       { value: "other", label: "Autre" },
     ],
-
     optional: "Facultatif",
     required: "Obligatoire",
 
@@ -241,7 +240,7 @@ const registrationTranslations = {
         placeholder: "Введите название университета",
       },
       education: {
-        label: "Текущий уровень образования",
+        label: "Уровень образования",
         placeholder: "Выберите уровень образования",
       },
     },
@@ -254,12 +253,12 @@ const registrationTranslations = {
     ],
 
     educationOptions: [
-      { value: "not-enrolled", label: "В настоящее время не обучаюсь" },
-      { value: "high-school", label: "Среднее образование" },
-      { value: "associate", label: "Среднее специальное образование" },
-      { value: "bachelors", label: "Бакалавриат" },
-      { value: "masters", label: "Магистратура" },
-      { value: "phd", label: "Докторантура" },
+      { value: "high-school", label: "Среднее образование (школа)" },
+      { value: "undergraduate", label: "Неполное высшее / Бакалавриат" },
+      { value: "graduate", label: "Высшее образование (Магистратура / аспирантура)" },
+      { value: "working", label: "Работаю" },
+      { value: "job-hunting", label: "В поисках работы" },
+      { value: "self-employed", label: "Самозанятый / Индивидуальный предприниматель" },
       { value: "other", label: "Другое" },
     ],
 

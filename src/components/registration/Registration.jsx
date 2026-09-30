@@ -189,9 +189,13 @@ function Registration({
           </div>
 
           <div className="registration-field">
-            <label htmlFor="registration-university">
-              {t.fields.university.label}
-            </label>
+            <div className="registration-label-row">
+                <label htmlFor="registration-university">
+                  {t.fields.university.label}
+                </label>
+                <span>{t.optional}</span>
+            </div>
+            
 
             <input
               id="registration-university"
@@ -201,7 +205,6 @@ function Registration({
               placeholder={t.fields.university.placeholder}
               value={formData.university}
               onChange={handleChange}
-              required
             />
           </div>
 
