@@ -9,7 +9,9 @@ import QuestionnaireApp from "./pages/QuestionnaireApp";
 import Admin from "./pages/Admin";
 import AdminLogin from "./pages/AdminLogin";
 import AdminRoute from "./components/admin/AdminRoute";
+import RegistrationWelcomePage from "./pages/RegistrationWelcomePage";
 import RegistrationPage from "./pages/RegistrationPage";
+import RegistrationSuccessPage from "./pages/RegistrationSuccessPage";
 import AttendeePage from "./pages/AttendeePage";
 
 function App() {
@@ -42,12 +44,30 @@ function App() {
         />
 
         {/* ==========================================
-            PUBLIC REGISTRATION FORM
+            PUBLIC REGISTRATION WELCOME PAGE
             ========================================== */}
 
         <Route
           path="/registration"
+          element={<RegistrationWelcomePage />}
+        />
+
+        {/* ==========================================
+            PUBLIC REGISTRATION FORM
+            ========================================== */}
+
+        <Route
+          path="/registration/form"
           element={<RegistrationPage />}
+        />
+
+        {/* ==========================================
+            PUBLIC REGISTRATION SUCCESS PAGE
+            ========================================== */}
+
+        <Route
+          path="/registration/success"
+          element={<RegistrationSuccessPage />}
         />
 
         {/* ==========================================

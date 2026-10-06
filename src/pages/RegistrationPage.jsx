@@ -15,7 +15,7 @@ function RegistrationPage() {
 
   useEffect(() => {
     wakeUpBackend();
-    }, []);
+  }, []);
 
   async function handleRegistration(formData) {
     setIsSubmitting(true);
@@ -23,6 +23,7 @@ function RegistrationPage() {
 
     try {
       const response = await fetch(
+        // `http://localhost:8000/api/registrations`,
         `${import.meta.env.VITE_API_URL}/api/registrations`,
         {
           method: "POST",
@@ -49,7 +50,7 @@ function RegistrationPage() {
         );
       }
 
-      navigate(`/attendee/${attendee.attendee_token}`);
+      navigate("/registration/success");
     } catch (error) {
       console.error("Registration error:", error);
 

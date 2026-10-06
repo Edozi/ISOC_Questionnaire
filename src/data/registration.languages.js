@@ -1,10 +1,16 @@
 const registrationTranslations = {
   en: {
     brand: "BRIGHTLAND CORPORATION",
-    title: "Register for ISOC",
+    title: "Register for ISOC 2.0",
     subtitle:
-      "Join us for the International Student Orientation Camp and be part of the experience.",
-
+      "",
+    confirmation:
+      "",
+    capacity:
+      "Free participation. Registration confirmation required. Limited Capacity — Reserve Your Place",
+    participantNotice:
+      "Grade 11–12 participants — School or guardian coordination can be requested where appropriate.",
+    
     fields: {
       name: {
         label: "Name",
@@ -17,6 +23,10 @@ const registrationTranslations = {
       email: {
         label: "Email Address",
         placeholder: "Enter your email address",
+      },
+      phone: {
+        label: "Mobile / WhatsApp Number",
+        placeholder: "+90 ...",
       },
       gender: {
         label: "Gender",
@@ -56,8 +66,8 @@ const registrationTranslations = {
     optional: "Optional",
     required: "Required",
 
-    submit: "Register",
-    note: "Your information will be used only for event registration purposes.",
+    submit: "RESERVE MY FREE PLACE",
+    note: "Data used only for event registration and related event updates.",
 
     legal: {
         beforeTerms: "I have read and agree to the",
@@ -70,8 +80,12 @@ const registrationTranslations = {
   tr: {
     brand: "BRIGHTLAND CORPORATION",
     title: "ISOC'ye Kayıt Ol",
-    subtitle:
-      "Uluslararası Öğrenci Oryantasyon Kampı'na katılın ve bu deneyimin bir parçası olun.",
+    subtitle: "",
+    confirmation: "",
+    capacity:
+      "Ücretsiz katılım. Kayıt onayı gereklidir. Sınırlı Kontenjan — Yerinizi Ayırtın",
+    participantNotice:
+      "11–12. Sınıf katılımcıları — Uygun görüldüğünde okul veya veli koordinasyonu talep edilebilir.",
 
     fields: {
       name: {
@@ -85,6 +99,10 @@ const registrationTranslations = {
       email: {
         label: "E-posta Adresi",
         placeholder: "E-posta adresinizi girin",
+      },
+      phone: {
+        label: "Mobil / WhatsApp Numarası",
+        placeholder: "+90 ...",
       },
       gender: {
         label: "Cinsiyet",
@@ -141,8 +159,12 @@ const registrationTranslations = {
   fr: {
     brand: "BRIGHTLAND CORPORATION",
     title: "Inscrivez-vous à l'ISOC",
-    subtitle:
-      "Rejoignez-nous pour le Camp d'Orientation des Étudiants Internationaux et participez à l'expérience.",
+    subtitle: "",
+    confirmation: "",
+    capacity:
+      "Participation gratuite. Confirmation d'inscription requise. Places limitées — Réservez votre place",
+    participantNotice:
+      "Participants de la 11e et 12e année — Une coordination avec l'école ou le tuteur peut être demandée le cas échéant.",
 
     fields: {
       name: {
@@ -156,6 +178,10 @@ const registrationTranslations = {
       email: {
         label: "Adresse e-mail",
         placeholder: "Entrez votre adresse e-mail",
+      },
+      phone: {
+        label: "Numéro Mobile / WhatsApp",
+        placeholder: "+90 ...",
       },
       gender: {
         label: "Genre",
@@ -211,9 +237,12 @@ const registrationTranslations = {
   ru: {
     brand: "BRIGHTLAND CORPORATION",
     title: "Регистрация на ISOC",
-    subtitle:
-      "Присоединяйтесь к Международному студенческому ориентационному лагерю и станьте частью этого события.",
-
+    subtitle: "",
+    confirmation: "",
+    capacity:
+      "Бесплатное участие. Требуется подтверждение регистрации. Количество мест ограничено — Забронируйте свое место",
+    participantNotice:
+      "Участники 11–12 классов — При необходимости может потребоваться согласование со школой или опекуном.",
     fields: {
       name: {
         label: "Имя",
@@ -226,6 +255,10 @@ const registrationTranslations = {
       email: {
         label: "Адрес электронной почты",
         placeholder: "Введите адрес электронной почты",
+      },
+      phone: {
+        label: "Мобильный / WhatsApp",
+        placeholder: "+90 ...",
       },
       gender: {
         label: "Пол",

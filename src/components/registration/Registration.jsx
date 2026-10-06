@@ -12,23 +12,24 @@ function Registration({
   const t =
     registrationTranslations[language] ||
     registrationTranslations.en;
-    
-    const [legalAccepted, setLegalAccepted] = useState(false);
 
-    const privacyUrl =
-    language === "tr"
-        ? "https://brightlandcorp.com/gizlilik"
-        : "https://brightlandcorp.com/en/privacy";
+  const [legalAccepted, setLegalAccepted] = useState(false);
 
-    const termsUrl =
+  const privacyUrl =
     language === "tr"
-        ? "https://brightlandcorp.com/kosullar"
-        : "https://brightlandcorp.com/en/terms";
+      ? "https://brightlandcorp.com/gizlilik"
+      : "https://brightlandcorp.com/en/privacy";
+
+  const termsUrl =
+    language === "tr"
+      ? "https://brightlandcorp.com/kosullar"
+      : "https://brightlandcorp.com/en/terms";
 
   const [formData, setFormData] = useState({
     name: "",
     surname: "",
     email: "",
+    phone: "",
     gender: "",
     country: "",
     university: "",
@@ -48,12 +49,12 @@ function Registration({
     event.preventDefault();
 
     if (!legalAccepted) {
-        return;
+      return;
     }
 
     if (onSubmit) {
-        onSubmit(formData);
-        return;
+      onSubmit(formData);
+      return;
     }
 
     console.log("Registration:", formData);
@@ -65,12 +66,18 @@ function Registration({
       <div className="registration-background-shape registration-shape-two" />
 
       <section className="registration-card">
+
+        {/* =========================
+            HEADER
+        ========================= */}
+
         <div className="registration-header">
           <img
             src="/logo-original.png"
             alt="Brightland"
             className="registration-logo"
           />
+
           <div className="registration-brand">
             {t.brand}
           </div>
@@ -81,14 +88,38 @@ function Registration({
 
           <h1>{t.title}</h1>
 
-          <p>{t.subtitle}</p>
+          <p>
+            {t.subtitle}
+          </p>
+
+          <p className="registration-confirmation-text">
+            {t.confirmation}
+          </p>
         </div>
+
 
         <form
           className="registration-form"
           onSubmit={handleSubmit}
         >
+
+          {/* =========================
+              CAPACITY NOTICE
+          ========================= */}
+
+          <div className="registration-capacity-notice">
+            <strong>
+              {t.capacity}
+            </strong>
+          </div>
+
+
+          {/* =========================
+              NAME + SURNAME
+          ========================= */}
+
           <div className="registration-field-group">
+
             <div className="registration-field">
               <label htmlFor="registration-name">
                 {t.fields.name.label}
@@ -122,7 +153,13 @@ function Registration({
                 required
               />
             </div>
+
           </div>
+
+
+          {/* =========================
+              EMAIL
+          ========================= */}
 
           <div className="registration-field">
             <label htmlFor="registration-email">
@@ -141,7 +178,35 @@ function Registration({
             />
           </div>
 
+
+          {/* =========================
+              MOBILE / WHATSAPP
+          ========================= */}
+
+          <div className="registration-field">
+            <label htmlFor="registration-phone">
+              {t.fields.phone.label}
+            </label>
+
+            <input
+              id="registration-phone"
+              name="phone"
+              type="tel"
+              className="text-input"
+              placeholder={t.fields.phone.placeholder}
+              value={formData.phone}
+              onChange={handleChange}
+              required
+            />
+          </div>
+
+
+          {/* =========================
+              GENDER + COUNTRY
+          ========================= */}
+
           <div className="registration-field-group">
+
             <div className="registration-field">
               <label htmlFor="registration-gender">
                 {t.fields.gender.label}
@@ -186,16 +251,24 @@ function Registration({
                 required
               />
             </div>
+
           </div>
+
+
+          {/* =========================
+              UNIVERSITY
+          ========================= */}
 
           <div className="registration-field">
             <div className="registration-label-row">
-                <label htmlFor="registration-university">
-                  {t.fields.university.label}
-                </label>
-                <span>{t.optional}</span>
+              <label htmlFor="registration-university">
+                {t.fields.university.label}
+              </label>
+
+              <span>
+                {t.optional}
+              </span>
             </div>
-            
 
             <input
               id="registration-university"
@@ -208,13 +281,20 @@ function Registration({
             />
           </div>
 
+
+          {/* =========================
+              EDUCATION
+          ========================= */}
+
           <div className="registration-field">
             <div className="registration-label-row">
               <label htmlFor="registration-education">
                 {t.fields.education.label}
               </label>
 
-              <span>{t.optional}</span>
+              <span>
+                {t.optional}
+              </span>
             </div>
 
             <select
@@ -239,58 +319,88 @@ function Registration({
             </select>
           </div>
 
+
+          {/* =========================
+              SCHOOL / GUARDIAN NOTICE
+          ========================= */}
+
+          <div className="registration-participant-notice">
+            <strong>
+              {t.participantNotice}
+            </strong>
+          </div>
+
+
+          {/* =========================
+              LEGAL CONSENT
+          ========================= */}
+
           <label className="registration-consent">
             <input
-                type="checkbox"
-                checked={legalAccepted}
-                onChange={(event) =>
+              type="checkbox"
+              checked={legalAccepted}
+              onChange={(event) =>
                 setLegalAccepted(event.target.checked)
-                }
-                required
+              }
+              required
             />
 
             <span>
-                {t.legal.beforeTerms}{" "}
-                <a
-                    href={termsUrl}
-                    target="_blank"
-                    rel="noreferrer"
-                >
-                    {t.legal.terms}
-                </a>{" "}
-                {t.legal.between}{" "}
-                <a
-                    href={privacyUrl}
-                    target="_blank"
-                    rel="noreferrer"
-                >
-                    {t.legal.privacy}
-                </a>.
+              {t.legal.beforeTerms}{" "}
+
+              <a
+                href={termsUrl}
+                target="_blank"
+                rel="noreferrer"
+              >
+                {t.legal.terms}
+              </a>{" "}
+
+              {t.legal.between}{" "}
+
+              <a
+                href={privacyUrl}
+                target="_blank"
+                rel="noreferrer"
+              >
+                {t.legal.privacy}
+              </a>.
             </span>
-            </label>
+          </label>
+
+
+          {/* =========================
+              SUBMIT
+          ========================= */}
 
           <button
             type="submit"
             className="button button-primary registration-submit"
             disabled={isSubmitting}
-            >
-            {isSubmitting ? "Submitting..." : t.submit}
-        </button>
-        {error && (
-            <p className="registration-error">
-                {error}
-            </p>
-            )}
+          >
+            {isSubmitting
+              ? "Submitting..."
+              : t.submit}
+          </button>
 
-            {success && (
-            <p className="registration-success">
-                Registration successful!
+
+          {error && (
+            <p className="registration-error">
+              {error}
             </p>
-        )}
+          )}
+
+          {success && (
+            <p className="registration-success">
+              Registration successful!
+            </p>
+          )}
+
 
           <p className="registration-note">
             {t.note}
           </p>
+
         </form>
       </section>
     </main>

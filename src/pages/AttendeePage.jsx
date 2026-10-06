@@ -21,6 +21,7 @@ function AttendeePage() {
     async function loadAttendee() {
       try {
         const response = await fetch(
+          // `http://localhost:8000/api/registrations/${token}`
           `${import.meta.env.VITE_API_URL}/api/registrations/${token}`
         );
 
