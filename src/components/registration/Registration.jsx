@@ -1,6 +1,7 @@
 import { useState } from "react";
 
 import registrationTranslations from "../../data/registration.languages";
+import countries from "../../data/countries";
 
 function Registration({
   language = "en",
@@ -240,16 +241,27 @@ function Registration({
                 {t.fields.country.label}
               </label>
 
-              <input
+              <select
                 id="registration-country"
                 name="country"
-                type="text"
-                className="text-input"
-                placeholder={t.fields.country.placeholder}
+                className="registration-select"
                 value={formData.country}
                 onChange={handleChange}
                 required
-              />
+              >
+                <option value="">
+                  {t.fields.country.placeholder}
+                </option>
+
+                {countries.map((country) => (
+                  <option
+                    key={country.code}
+                    value={country.code}
+                  >
+                    {country.names[language] || country.names.en}
+                  </option>
+                ))}
+              </select>
             </div>
 
           </div>

@@ -37,8 +37,14 @@ function RegistrationPage() {
       const data = await response.json();
 
       if (!response.ok) {
+        const detail = Array.isArray(data.detail)
+          ? data.detail
+              .map((error) => error.msg)
+              .join(", ")
+          : data.detail;
+
         throw new Error(
-          data.detail || "Registration failed."
+          detail || "Registration failed."
         );
       }
 
