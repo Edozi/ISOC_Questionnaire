@@ -578,3 +578,259 @@
 .export-button span {
   font-size: 1.1rem;
 }
+
+
+
+/* =====================================================
+   REGISTRATION ADMIN
+   ===================================================== */
+
+.registration-toolbar {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin: 24px 0 18px;
+}
+
+.registration-search {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex: 1;
+  min-width: 240px;
+  padding: 0 14px;
+  border: 1px solid #dce5df;
+  border-radius: 10px;
+  background: #fff;
+  color: #68756d;
+}
+
+.registration-search input {
+  width: 100%;
+  min-width: 0;
+  padding: 12px 0;
+  border: none;
+  outline: none;
+  background: transparent;
+  color: #17231c;
+  font: inherit;
+}
+
+.registration-action,
+.registration-pagination button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 10px 14px;
+  border: 1px solid #dce5df;
+  border-radius: 9px;
+  background: #fff;
+  color: #247447;
+  font: inherit;
+  font-size: 14px;
+  cursor: pointer;
+}
+
+.registration-action:hover,
+.registration-pagination button:not(:disabled):hover {
+  background: #f1faf5;
+}
+
+.registration-action:disabled,
+.registration-pagination button:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.registration-table-wrapper {
+  width: 100%;
+  overflow-x: auto;
+  border: 1px solid #e1e9e4;
+  border-radius: 12px;
+  background: #fff;
+}
+
+.registration-table {
+  width: 100%;
+  border-collapse: collapse;
+  text-align: left;
+  font-size: 14px;
+}
+
+.registration-table th,
+.registration-table td {
+  padding: 15px 16px;
+  border-bottom: 1px solid #edf1ee;
+  white-space: nowrap;
+}
+
+.registration-table th {
+  background: #f8fbf9;
+  color: #68756d;
+  font-size: 12px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+
+.registration-table td {
+  color: #39473e;
+}
+
+.registration-table tbody tr:hover {
+  background: #f8fbf9;
+}
+
+.registration-table tbody tr:last-child td {
+  border-bottom: none;
+}
+
+.registration-table td strong {
+  color: #17231c;
+  font-weight: 600;
+}
+
+.registration-empty {
+  padding: 36px !important;
+  text-align: center;
+  color: #68756d !important;
+}
+
+.registration-icon-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 36px;
+  height: 36px;
+  border: 1px solid #dce5df;
+  border-radius: 8px;
+  background: #fff;
+  color: #247447;
+  cursor: pointer;
+}
+
+.registration-icon-button:hover {
+  background: #f1faf5;
+}
+
+.registration-pagination {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 16px;
+  margin-top: 18px;
+  color: #68756d;
+  font-size: 13px;
+}
+
+.registration-pagination > div {
+  display: flex;
+  gap: 8px;
+}
+
+.registration-error {
+  margin: 16px 0;
+  padding: 16px;
+  border: 1px solid #f0caca;
+  border-radius: 10px;
+  background: #fff8f8;
+  color: #a32d2d;
+}
+
+.registration-error button {
+  padding: 8px 12px;
+  border: 1px solid #e6b8b8;
+  border-radius: 7px;
+  background: #fff;
+  color: inherit;
+  cursor: pointer;
+}
+
+.registration-modal-backdrop {
+  position: fixed;
+  inset: 0;
+  z-index: 1000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow-y: auto;
+  padding: 20px;
+  background: rgb(20 35 26 / 45%);
+}
+
+.registration-modal {
+  width: 100%;
+  max-width: 620px;
+  max-height: 85vh;
+  overflow-y: auto;
+  padding: 24px;
+  border: 1px solid #e1e9e4;
+  border-radius: 16px;
+  background: #fff;
+  box-shadow: 0 20px 60px rgb(0 0 0 / 15%);
+}
+
+.registration-modal-header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 16px;
+  margin-bottom: 20px;
+}
+
+.registration-modal-header h2 {
+  margin: 0 0 6px;
+  color: #17231c;
+  font-size: 21px;
+}
+
+.registration-modal-header p {
+  margin: 0;
+  color: #68756d;
+}
+
+.registration-details {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 18px;
+  margin: 0 0 24px;
+}
+
+.registration-details > div {
+  min-width: 0;
+}
+
+.registration-details dt {
+  margin-bottom: 5px;
+  color: #68756d;
+  font-size: 12px;
+}
+
+.registration-details dd {
+  overflow-wrap: anywhere;
+  margin: 0;
+  color: #17231c;
+  font-size: 14px;
+}
+
+@media (max-width: 640px) {
+  .registration-details {
+    grid-template-columns: 1fr;
+  }
+
+  .registration-toolbar {
+    align-items: stretch;
+  }
+
+  .registration-search {
+    flex-basis: 100%;
+  }
+
+  .registration-pagination {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+}

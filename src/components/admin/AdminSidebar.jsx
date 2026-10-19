@@ -1,3 +1,4 @@
+
 import {
   LayoutDashboard,
   Users,
@@ -6,8 +7,8 @@ import {
   Compass,
   TriangleAlert,
   MessageSquareText,
+  ClipboardList,
 } from "lucide-react";
-
 
 function AdminSidebar({
   activeSection,
@@ -51,14 +52,37 @@ function AdminSidebar({
     },
   ];
 
+  const managementItems = [
+    {
+      id: "registrations",
+      label: "Registrations",
+      icon: ClipboardList,
+    },
+  ];
+
+  function renderMenuItem(item) {
+    const Icon = item.icon;
+
+    return (
+      <button
+        key={item.id}
+        type="button"
+        className={`admin-nav-item ${
+          activeSection === item.id ? "active" : ""
+        }`}
+        onClick={() => onSectionChange(item.id)}
+      >
+        <Icon size={19} />
+
+        <span>{item.label}</span>
+      </button>
+    );
+  }
 
   return (
     <aside className="admin-sidebar">
-
       <div className="admin-brand">
-        <div className="admin-brand-icon">
-          ✦
-        </div>
+        <div className="admin-brand-icon">✦</div>
 
         <div>
           <strong>ISOC</strong>
@@ -66,63 +90,32 @@ function AdminSidebar({
         </div>
       </div>
 
-
       <nav className="admin-navigation">
-
         <span className="admin-nav-label">
           ANALYTICS
         </span>
 
-        {menuItems.map((item) => {
-          const Icon = item.icon;
+        {menuItems.map(renderMenuItem)}
 
-          return (
-            <button
-              key={item.id}
-              className={`admin-nav-item ${
-                activeSection === item.id
-                  ? "active"
-                  : ""
-              }`}
-              onClick={() =>
-                onSectionChange(item.id)
-              }
-            >
-              <Icon size={19} />
+        <span className="admin-nav-label">
+          MANAGEMENT
+        </span>
 
-              <span>
-                {item.label}
-              </span>
-            </button>
-          );
-        })}
-
+        {managementItems.map(renderMenuItem)}
       </nav>
 
-
       <div className="admin-sidebar-footer">
-
         <div className="admin-status">
-
           <span className="status-dot" />
 
           <div>
-            <strong>
-              System Active
-            </strong>
-
-            <span>
-              Survey collection running
-            </span>
+            <strong>System Active</strong>
+            <span>Information retrieval active</span>
           </div>
-
         </div>
-
       </div>
-
     </aside>
   );
 }
-
 
 export default AdminSidebar;

@@ -7,6 +7,7 @@ import {
 
 import QuestionnaireApp from "./pages/QuestionnaireApp";
 import Admin from "./pages/Admin";
+import RegistrationAdmin from "./pages/RegistrationAdmin";
 import AdminLogin from "./pages/AdminLogin";
 import AdminRoute from "./components/admin/AdminRoute";
 import RegistrationWelcomePage from "./pages/RegistrationWelcomePage";
@@ -101,6 +102,15 @@ function App() {
           element={
             <AdminRoute>
               <Admin />
+            </AdminRoute>
+          }
+        />
+
+        <Route
+          path="/admin/registrations"
+          element={
+            <AdminRoute>
+              <RegistrationAdmin />
             </AdminRoute>
           }
         />

@@ -50,6 +50,15 @@ function Admin() {
 
   const navigate = useNavigate();
 
+  function handleSectionChange(section) {
+    if (section === "registrations") {
+      navigate("/admin/registrations");
+      return;
+    }
+
+    setActiveSection(section);
+  }
+
   /*
    * =========================================================
    * LOAD RESPONSES
@@ -511,9 +520,7 @@ function Admin() {
       <div className="admin-layout">
         <AdminSidebar
           activeSection={activeSection}
-          onSectionChange={
-            setActiveSection
-          }
+          onSectionChange={handleSectionChange}
         />
 
         <main className="admin-main">
@@ -579,12 +586,12 @@ function Admin() {
           SIDEBAR
           ===================================================== */}
 
-      <AdminSidebar
-        activeSection={activeSection}
-        onSectionChange={
-          setActiveSection
-        }
-      />
+      
+        <AdminSidebar
+          activeSection={activeSection}
+          onSectionChange={handleSectionChange}
+        />
+
 
 
       {/* =====================================================
