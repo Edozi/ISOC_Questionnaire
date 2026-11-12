@@ -81,10 +81,10 @@ function RegistrationSuccess({
 
   function handleGoogleCalendar() {
     const start =
-      "20261107T100000";
+      "20261114T100000";
 
     const end =
-      "20261107T160000";
+      "20261114T160000";
 
     const params =
       new URLSearchParams({
@@ -110,8 +110,8 @@ function RegistrationSuccess({
         path: "/calendar/action/compose",
         rru: "addevent",
         subject: t.calendarTitle,
-        startdt: "2026-11-07T10:00:00",
-        enddt: "2026-11-07T16:00:00",
+        startdt: "2026-11-14T10:00:00",
+        enddt: "2026-11-14T16:00:00",
         body: t.calendarDescription,
         location: t.event.location,
       });
@@ -135,8 +135,8 @@ function RegistrationSuccess({
       "BEGIN:VEVENT",
       "UID:isoc-2-2026@brightlandcorp.com",
       "DTSTAMP:20261006T000000Z",
-      "DTSTART:20261107T100000",
-      "DTEND:20261107T160000",
+      "DTSTART:20261114T100000",
+      "DTEND:20261114T160000",
       "SUMMARY:ISOC 2.0 — International Student Orientation Camp",
       "DESCRIPTION:Connect. Belong. Build. — Shaping Futures Together in Türkiye.",
       "LOCATION:KYK Bornova Girls' Student Dormitory Conference Hall, Ege University, İzmir, Türkiye",

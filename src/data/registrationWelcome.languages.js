@@ -10,7 +10,7 @@ const registrationWelcomeTranslations = {
 
     event: {
       dateLabel: "DATE",
-      date: "Saturday, 7th November, 2026",
+      date: "Saturday, 14th November, 2026",
 
       timeLabel: "TIME",
       time: "10:00 - 16:00",
@@ -98,7 +98,7 @@ const registrationWelcomeTranslations = {
 
     event: {
       dateLabel: "TARİH",
-      date: "7 Kasım 2026 Cumartesi",
+      date: "14 Kasım 2026 Cumartesi",
 
       timeLabel: "SAAT",
       time: "10:00 - 16:00",
@@ -186,7 +186,7 @@ const registrationWelcomeTranslations = {
 
     event: {
       dateLabel: "DATE",
-      date: "Samedi 7 novembre 2026",
+      date: "Samedi 14 novembre 2026",
 
       timeLabel: "HEURE",
       time: "10:00 - 16:00",
@@ -274,7 +274,7 @@ const registrationWelcomeTranslations = {
 
     event: {
       dateLabel: "ДАТА",
-      date: "Суббота, 7 ноября 2026 г.",
+      date: "Суббота, 14 ноября 2026 г.",
 
       timeLabel: "ВРЕМЯ",
       time: "10:00 - 16:00",
